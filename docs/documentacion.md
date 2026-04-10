@@ -6,7 +6,6 @@
 ### UNIDAD DE ESTUDIOS SUPERIORES  
 ### SAN JOSÉ DEL RINCÓN  
 
-
 ---
 
 **ABRIL DE 2026**
@@ -15,6 +14,8 @@
 
 
 # Documentación del Sistema de Invernadero Inteligente
+
+---
 
 ## 1. Descripción general
 
@@ -48,9 +49,59 @@ Y activar automáticamente una bomba de agua.
 
 ---
 
-## 3. Módulos del sistema
+## 3. Conexiones del sistema
 
-### 3.1 Arduino
+### Sensor DHT11 (Temperatura y humedad del aire)
+- VCC → 5V de Arduino  
+- GND → GND de Arduino  
+- DATA → Pin digital D2  
+
+---
+
+### Sensor de humedad de suelo
+- VCC → 5V de Arduino  
+- GND → GND de Arduino  
+- AO (Salida analógica) → Pin A0  
+
+---
+
+### Módulo de relé (bomba de agua)
+- VCC → 5V de Arduino  
+- GND → GND de Arduino  
+- IN → Pin digital D7  
+
+---
+
+### Bomba de agua (alimentación externa)
+- COM → Positivo de la fuente de la bomba  
+- NO (Normally Open) → Positivo de la bomba  
+- Negativo de la bomba → Directo a la fuente de alimentación  
+
+---
+
+## Importante
+- El relé trabaja en modo **activo en LOW**
+- La bomba debe usar **fuente externa (no Arduino)**
+- Todas las tierras (GND) deben estar en común
+
+---
+
+## Resumen de pines
+
+| Componente              | Pin Arduino |
+|------------------------|------------|
+| DHT11 DATA             | D2         |
+| Sensor de suelo (AO)   | A0         |
+| Relé (bomba)           | D7         |
+
+
+![Diagrama](/images/img1.jpeg)
+
+---
+
+## 4. Módulos del sistema
+
+### 4.1 Arduino
 
 Funciones:
 
@@ -60,7 +111,7 @@ Funciones:
 
 ---
 
-### 3.2 Servidor Python
+### 4.2 Servidor Python
 
 Funciones:
 
@@ -70,7 +121,7 @@ Funciones:
 
 ---
 
-### 3.3 Cliente (LM Studio)
+### 4.3 Cliente (LM Studio)
 
 Funciones:
 
@@ -80,7 +131,7 @@ Funciones:
 
 ---
 
-## 4. Flujo del sistema
+## 5. Flujo del sistema
 
 1. Arduino lee sensores
 2. Envía datos por Serial en JSON
@@ -90,7 +141,7 @@ Funciones:
 
 ---
 
-## 5.Lógica de riego
+## 6. Lógica de riego
 
 El sistema usa histéresis:
 
@@ -101,7 +152,7 @@ Esto evita activaciones constantes.
 
 ---
 
-## 6.Ejemplo de datos
+## 7. Ejemplo de datos
 
 ```json
 {
@@ -110,14 +161,3 @@ Esto evita activaciones constantes.
   "suelo": 650,
   "bomba": 1
 }
-```
-
----
-
-## 7.Consideraciones
-
-* Ajustar valores del sensor de suelo
-* Verificar puerto serial (COM)
-* Mantener misma velocidad de comunicación (9600)
-
----

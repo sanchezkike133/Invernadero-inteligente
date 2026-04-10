@@ -8,7 +8,7 @@
 
 DHT dht(DHTPIN, DHTTYPE);
 
-// Límites de humedad (ajusta según tu sensor)
+// 🔥 Límites de humedad (ajusta según tu sensor)
 int seco = 700;
 int humedo = 500;
 
@@ -20,7 +20,7 @@ void setup() {
 
   pinMode(BOMBA, OUTPUT);
 
-  // IMPORTANTE: relevador activo en LOW
+  // 🔴 IMPORTANTE: relevador activo en LOW
   digitalWrite(BOMBA, HIGH); // bomba apagada al iniciar
 }
 
@@ -36,21 +36,21 @@ void loop() {
     return;
   }
 
-  // CONTROL INTELIGENTE CON HISTÉRESIS
+  // 🌱 CONTROL INTELIGENTE CON HISTÉRESIS
 
-  // Si está seco → encender bomba
+  // 👉 Si está seco → encender bomba
   if (suelo > seco && !regando) {
-    digitalWrite(BOMBA, LOW);  // ENCENDER (activo en LOW)
+    digitalWrite(BOMBA, LOW);  // 🔥 ENCENDER (activo en LOW)
     regando = true;
   }
 
-  // Si ya está húmedo → apagar bomba
+  // 👉 Si ya está húmedo → apagar bomba
   if (suelo < humedo && regando) {
-    digitalWrite(BOMBA, HIGH); // APAGAR
+    digitalWrite(BOMBA, HIGH); // ❌ APAGAR
     regando = false;
   }
 
-  // Enviar datos JSON
+  // 📡 Enviar datos JSON
   Serial.print("{");
   Serial.print("\"temperatura\":");
   Serial.print(temperatura);
